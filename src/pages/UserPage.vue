@@ -8,23 +8,32 @@
   <van-cell title="电话" is-link :value="user.phone" @click="toEdit('phone','电话',user.phone)"/>
   <van-cell title="邮箱" is-link :value="user.email" @click="toEdit('email','邮箱',user.email)"/>
   <van-cell title="星球编号" is-link :value="user.planetCode"/>
-  <van-cell title="创建时间" is-link :value="user.createTime.toISOString() "/>
+  <van-cell title="创建时间" is-link :value="user.createTime"/>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import {onMounted, ref} from "vue";
+import myAxios from "../utils/request";
+import {showFailToast, showSuccessToast} from "vant";
+import {getCurrentUser} from "../services/user";
 const router = useRouter();
-const user = {
-  id: '1',
-  username: '小黑子',
-  userAccount: 'dogYuYan',
-  avatarUrl: 'http://t15.baidu.com/it/u=1155900523,2163568117&fm=224&app=112&f=JPEG?w=500&h=500',
-  gender: '男',
-  phone: '19938874583',
-  email: '111222@qq.com',
-  planetCode: '123',
-  createTime: new Date()
-}
+const user = ref({})
+// const user = {
+//   id: '1',
+//   username: '小黑子',
+//   userAccount: 'dogYuYan',
+//   avatarUrl: 'http://t15.baidu.com/it/u=1155900523,2163568117&fm=224&app=112&f=JPEG?w=500&h=500',
+//   gender: '男',
+//   phone: '19938874583',
+//   email: '111222@qq.com',
+//   planetCode: '123',
+//   createTime: new Date()
+// }
+
+onMounted(async () => {
+  user.value = await getCurrentUser();
+})
 const toEdit = (editKey:string,editName:string,currentValue:string) => {
   router.push({
     path:'/user/edit',

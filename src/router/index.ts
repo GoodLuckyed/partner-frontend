@@ -2,9 +2,10 @@ import * as VueRouter from 'vue-router'
 import Index from '../pages/IndexPage.vue'
 import Team from '../pages/TeamPage.vue'
 import User from '../pages/UserPage.vue'
-import Search from '../pages/SearchPage.vue'
-import Edit from '../pages/UserEditPage.vue'
+import SearchPage from '../pages/SearchPage.vue'
+import UserEditPage from '../pages/UserEditPage.vue'
 import SearchResult from '../pages/SearchResultPage.vue'
+import UserLogin from '../pages/UserLoginPage.vue'
 
 //@ts-ignore
 const router = VueRouter.createRouter({
@@ -25,15 +26,19 @@ const router = VueRouter.createRouter({
         },
         {
             path: '/search',
-            component: Search
+            component: SearchPage
         },
         {
             path: '/user/edit',
-            component: Edit
+            component: UserEditPage
         },
         {
             path: '/user/list',
             component: SearchResult
+        },
+        {
+            path:'/user/login',
+            component:UserLogin
         }
     ]
 })

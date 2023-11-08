@@ -16,8 +16,15 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import {useRoute} from "vue-router";
+import {useRoute,useRouter} from "vue-router";
+import myAxios from "../utils/request";
+import { showSuccessToast, showFailToast } from 'vant';
+import 'vant/es/toast/style';
+import 'vant/es/notify/style'
+import {getCurrentUser, setCurrentUser} from "../services/user";
+import {setCurrentUserState} from "../states/user";
 
+const router = useRouter();
 const route = useRoute();
 const editUser = ref({
   editKey: route.query.editKey,
@@ -25,9 +32,22 @@ const editUser = ref({
   currentValue: route.query.currentValue
 })
 
-const onSubmit = (values) => {
-  //todo:修改的参数值提交搭到后台
-  console.log('onSubmit', values);
+//提交后台修改
+const onSubmit = async () => {
+  const currentUser = await getCurrentUser();
+  const result = await myAxios.post('/user/update',{
+    'id':currentUser.id,
+    [editUser.value.editKey]:editUser.value.currentValue
+  })
+  if (result.code === 0){
+    //更新缓存
+    const result = await myAxios.get('/user/current')
+    setCurrentUser(result.data);
+    router.back();
+    showSuccessToast('修改成功')
+  }else {
+    showFailToast('修改失败')
+  }
 };
 
 </script>
