@@ -1,19 +1,5 @@
 <template>
-  <van-card
-      v-for="user in userList"
-      :desc="user.profile"
-      :title="`${user.username}（${user.planetCode}）`"
-      :thumb="user.avatarUrl"
-  >
-    <template #tags>
-      <van-tag plain type="primary" v-for="tag in user.tags" style="margin-right: 8px;margin-top: 8px">
-        {{ tag }}
-      </van-tag>
-    </template>
-    <template #footer>
-      <van-button size="mini">联系我</van-button>
-    </template>
-  </van-card>
+  <UserCardList :userList="userList"></UserCardList>
   <van-empty v-if="!userList || userList.length < 1" description="无搜索结果" />
 </template>
 
@@ -25,6 +11,7 @@ import qs from "qs";
 import { showSuccessToast, showFailToast } from 'vant';
 import 'vant/es/toast/style';
 import 'vant/es/notify/style'
+import UserCardList from "../components/UserCardList.vue";
 
 const route = useRoute();
 
@@ -46,7 +33,7 @@ onMounted(async () => {
         return response.data;
       })
       .catch(function (error) {
-        showSuccessToast('请求失败')
+        showFailToast('请求失败')
       })
   if (userListData) {
     userListData.forEach(user => {
