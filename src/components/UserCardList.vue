@@ -18,15 +18,15 @@
 
 <script setup lang="ts">
 import {defineProps, withDefaults} from "vue";
-import {userType} from "../models/user";
+import {UserType} from "../models/user";
 
 interface UserCardListProps{
-  userList:userType[]
+  userList:UserType[]
 }
 
 //@ts-ignore
 const props = withDefaults(defineProps<UserCardListProps>(),{
-  userList:[]
+  userList:[] as UserType[]
 })
 
 

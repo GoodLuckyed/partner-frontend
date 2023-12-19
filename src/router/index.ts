@@ -6,6 +6,7 @@ import SearchPage from '../pages/SearchPage.vue'
 import UserEditPage from '../pages/UserEditPage.vue'
 import SearchResult from '../pages/SearchResultPage.vue'
 import UserLogin from '../pages/UserLoginPage.vue'
+import TeamAddPage from '../pages/TeamAddPage.vue'
 
 //@ts-ignore
 const router = VueRouter.createRouter({
@@ -39,6 +40,10 @@ const router = VueRouter.createRouter({
         {
             path:'/user/login',
             component:UserLogin
+        },
+        {
+            path:"/team/add",
+            component:TeamAddPage
         }
     ]
 })
