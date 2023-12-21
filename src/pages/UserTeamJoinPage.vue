@@ -1,7 +1,6 @@
 <template>
   <div id="teamPage">
     <van-search v-model="searchText" placeholder="请输入搜索关键词" @search="onSearch"/>
-    <van-button type="primary" @click="doJoinTeam">创建队伍</van-button>
     <TeamCardList :team-list="teamList"></TeamCardList>
     <van-empty v-if="teamList.length < 1" description="无搜索结果" />
   </div>
@@ -11,7 +10,7 @@
 import { useRouter } from "vue-router";
 import TeamCardList from "../components/TeamCardList.vue";
 import {onMounted, ref} from "vue";
-import {reqGetTeamList} from "../api/team";
+import {reqGetJoinedTeamList} from "../api/team";
 import {showFailToast} from "vant";
 
 const router = useRouter();
@@ -20,11 +19,6 @@ const searchText = ref('')
 const onSearch = (val:string) => {
   listTeams(val)
 }
-const doJoinTeam = () => {
-  router.push({
-    path:'/team/add'
-  })
-}
 
 const teamList = ref([])
 onMounted(async () => {
@@ -32,7 +26,7 @@ onMounted(async () => {
 })
 
 const listTeams = async (val = '') => {
-  const res = await reqGetTeamList(val)
+  const res = await reqGetJoinedTeamList(val)
   if (res?.code == 0){
     teamList.value = res.data
   }else {

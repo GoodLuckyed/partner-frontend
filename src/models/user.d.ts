@@ -9,5 +9,6 @@ export type UserType = {
     email:string;
     userRole:number,
     planetCode?:string;
+    tags:string;
     createTime:Date;
 }

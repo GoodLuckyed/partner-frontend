@@ -11,7 +11,7 @@
 import { useRouter } from "vue-router";
 import TeamCardList from "../components/TeamCardList.vue";
 import {onMounted, ref} from "vue";
-import {reqGetTeamList} from "../api/team";
+import {reqGetCreatedTeamList} from "../api/team";
 import {showFailToast} from "vant";
 
 const router = useRouter();
@@ -32,7 +32,7 @@ onMounted(async () => {
 })
 
 const listTeams = async (val = '') => {
-  const res = await reqGetTeamList(val)
+  const res = await reqGetCreatedTeamList(val)
   if (res?.code == 0){
     teamList.value = res.data
   }else {
