@@ -1,14 +1,14 @@
 import * as VueRouter from 'vue-router'
 import Index from '../pages/IndexPage.vue'
-import Team from '../pages/TeamPage.vue'
+import TeamPage from '../pages/TeamPage.vue'
 import UserPage from "../pages/UserPage.vue";
 import UserUpdatePage from '../pages/UserUpdatePage.vue'
 import UserTeamJoinPage from '../pages/UserTeamJoinPage.vue'
 import UserTeamCreatePage from '../pages/UserTeamCreatePage.vue'
 import SearchPage from '../pages/SearchPage.vue'
 import UserEditPage from '../pages/UserEditPage.vue'
-import SearchResult from '../pages/SearchResultPage.vue'
-import UserLogin from '../pages/UserLoginPage.vue'
+import SearchResultPage from '../pages/SearchResultPage.vue'
+import UserLoginPage from '../pages/UserLoginPage.vue'
 import TeamAddPage from '../pages/TeamAddPage.vue'
 import TeamUpdatePage from '../pages/TeamUpdatePage.vue'
 //@ts-ignore
@@ -18,51 +18,87 @@ const router = VueRouter.createRouter({
     routes: [
         {
             path: '/',
-            component: Index
+            component: Index,
+            meta:{
+                title:"首页"
+            }
         },
         {
             path: '/team',
-            component: Team
+            component: TeamPage,
+            meta:{
+                title:"找队伍"
+            }
         },
         {
             path: '/user',
-            component: UserPage
+            component: UserPage,
+            meta:{
+                title:"个人信息"
+            }
         },
         {
             path: '/user/update',
-            component: UserUpdatePage
+            component: UserUpdatePage,
+            meta:{
+                title: '更新个人信息'
+            }
         },
         {
             path: '/user/team/join',
-            component: UserTeamJoinPage
+            component: UserTeamJoinPage,
+            meta:{
+                title: '已加入队伍'
+            }
         },
         {
             path: '/user/team/create',
-            component: UserTeamCreatePage
+            component: UserTeamCreatePage,
+            meta:{
+                title: '已创建队伍'
+            }
         },
         {
             path: '/search',
-            component: SearchPage
+            component: SearchPage,
+            meta:{
+                title: '找伙伴'
+            }
         },
         {
             path: '/user/edit',
-            component: UserEditPage
+            component: UserEditPage,
+            meta:{
+                title: '编辑个人信息'
+            }
         },
         {
             path: '/user/list',
-            component: SearchResult
+            component: SearchResultPage,
+            meta:{
+                title: '用户列表'
+            }
         },
         {
             path:'/user/login',
-            component:UserLogin
+            component:UserLoginPage,
+            meta:{
+                title:"登录"
+            }
         },
         {
             path:"/team/add",
-            component:TeamAddPage
+            component:TeamAddPage,
+            meta:{
+                title: '创建队伍'
+            }
         },
         {
             path:"/team/update",
-            component:TeamUpdatePage
+            component:TeamUpdatePage,
+            meta:{
+                title: '更新队伍'
+            }
         }
     ]
 })

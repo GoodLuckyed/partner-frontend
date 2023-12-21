@@ -1,5 +1,5 @@
 <template>
-  <van-cell center title="心动模式">
+  <van-cell center title="心动匹配">
     <template #right-icon>
       <van-switch v-model="isMatchMode" />
     </template>
@@ -36,7 +36,7 @@ const loadData = async () => {
       }
     })
         .then(function (response) {
-          showSuccessToast('请求成功');
+          // showSuccessToast('请求成功');
           return response.data;
         })
         .catch(function (error) {
@@ -51,7 +51,7 @@ const loadData = async () => {
       }
     })
         .then(function (response) {
-          showSuccessToast('请求成功');
+          // showSuccessToast('请求成功');
           return response.data;
         })
         .catch(function (error) {

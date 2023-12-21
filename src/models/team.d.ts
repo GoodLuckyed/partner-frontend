@@ -12,4 +12,5 @@ export type TeamType = {
     createUser?: UserType;
     hasJoinNum?: number;
     userId:number;
+    hasJoin:boolean;
 }
