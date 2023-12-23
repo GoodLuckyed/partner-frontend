@@ -29,9 +29,10 @@
 import {ref} from "vue";
 import myAxios from "../utils/request";
 import {showFailToast, showSuccessToast} from "vant";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 
 const router = useRouter()
+const route = useRoute();
 const userAccount = ref('');
 const userPassword = ref('');
 const onSubmit = async () => {
@@ -40,7 +41,7 @@ const onSubmit = async () => {
     userPassword:userPassword.value
   })
   if (result.code === 0 && result.data){
-    router.replace('/')
+    window.location.href = route.query?.redirect as string ?? '/';
     showSuccessToast('登录成功')
   }else {
     showFailToast('登录失败')

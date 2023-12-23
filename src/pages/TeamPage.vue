@@ -1,7 +1,11 @@
 <template>
   <div id="teamPage">
     <van-search v-model="searchText" placeholder="请输入搜索关键词" @search="onSearch"/>
-    <van-button type="primary" @click="doJoinTeam">创建队伍</van-button>
+    <van-tabs v-model:active="active" @change="onTabChange">
+      <van-tab title="公开" name="public"/>
+      <van-tab title="加密" name="secret"/>
+    </van-tabs>
+    <van-button class="create-button" icon="plus" type="primary" @click="doCreateTeam" />
     <TeamCardList :team-list="teamList"></TeamCardList>
     <van-empty v-if="teamList.length < 1" description="无搜索结果" />
   </div>
@@ -16,11 +20,22 @@ import {showFailToast} from "vant";
 
 const router = useRouter();
 
+
+const active = ref('public')
+
+const onTabChange = (name:string) => {
+  if (name === 'public'){
+    listTeams(searchText.value,0);
+  }else {
+    listTeams(searchText.value,2)
+  }
+}
+
 const searchText = ref('')
 const onSearch = (val:string) => {
   listTeams(val)
 }
-const doJoinTeam = () => {
+const doCreateTeam = () => {
   router.push({
     path:'/team/add'
   })
@@ -31,8 +46,8 @@ onMounted(async () => {
   listTeams();
 })
 
-const listTeams = async (val = '') => {
-  const res = await reqGetTeamList(val)
+const listTeams = async (val = '',status = 0) => {
+  const res = await reqGetTeamList(val,status)
   if (res?.code == 0){
     teamList.value = res.data
   }else {

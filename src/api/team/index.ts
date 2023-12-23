@@ -28,19 +28,21 @@ export const reqAddTeam = (data:any) => {
 }
 
 //获取队伍列表请求接口
-export const reqGetTeamList = (val?:string) => {
+export const reqGetTeamList = (val?:string,status?:number) => {
     return myAxios.get(API.GET_TEAM_LIST,{
         params:{
             searchText:val,
-            pageNum:1
+            pageNum:1,
+            status:status
         }
     })
 }
 
 //加入队伍请求接口
-export const reqJoinTeam = (id:number) => {
+export const reqJoinTeam = (id:number,password?:string) => {
     return myAxios.post(API.JOIN_TEAM,{
-        teamId:id
+        teamId:id,
+        password:password
     })
 }
 
