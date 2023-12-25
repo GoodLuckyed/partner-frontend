@@ -17,12 +17,12 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {useRoute,useRouter} from "vue-router";
-import myAxios from "../utils/request";
+import myAxios from "../../utils/request.ts";
 import { showSuccessToast, showFailToast } from 'vant';
 import 'vant/es/toast/style';
 import 'vant/es/notify/style'
-import {getCurrentUser, setCurrentUser} from "../services/user";
-import {setCurrentUserState} from "../states/user";
+import {getCurrentUser, setCurrentUser} from "../../services/user.ts";
+import {setCurrentUserState} from "../../states/user.ts";
 
 const router = useRouter();
 const route = useRoute();

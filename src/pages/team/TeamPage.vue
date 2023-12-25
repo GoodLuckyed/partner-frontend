@@ -6,16 +6,16 @@
       <van-tab title="加密" name="secret"/>
     </van-tabs>
     <van-button class="create-button" icon="plus" type="primary" @click="doCreateTeam" />
-    <TeamCardList :team-list="teamList"></TeamCardList>
+    <TeamCardList :team-list="teamList" @update-active="updateActive"></TeamCardList>
     <van-empty v-if="teamList.length < 1" description="无搜索结果" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import TeamCardList from "../components/TeamCardList.vue";
+import TeamCardList from "../../components/TeamCardList.vue";
 import {onMounted, ref} from "vue";
-import {reqGetTeamList} from "../api/team";
+import {reqGetTeamList} from "../../api/team";
 import {showFailToast} from "vant";
 
 const router = useRouter();
@@ -23,6 +23,10 @@ const router = useRouter();
 
 const active = ref('public')
 
+//更新active
+const updateActive = () => {
+  active.value = 'public'
+}
 const onTabChange = (name:string) => {
   if (name === 'public'){
     listTeams(searchText.value,0);
@@ -58,5 +62,4 @@ const listTeams = async (val = '',status = 0) => {
 </script>
 
 <style scoped>
-
 </style>

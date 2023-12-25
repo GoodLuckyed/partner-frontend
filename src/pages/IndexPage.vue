@@ -1,11 +1,20 @@
 <template>
-  <van-cell center title="心动匹配">
-    <template #right-icon>
-      <van-switch v-model="isMatchMode" />
-    </template>
-  </van-cell>
-  <UserCardList :userList="userList" :loading="loading"></UserCardList>
-  <van-empty v-if="!userList || userList.length < 1" description="暂无数据" />
+  <div id="index">
+    <div class="header-box">
+      <van-sticky>
+        <span class="title">伙伴匹配系统</span>
+      </van-sticky>
+    </div>
+    <div class="content-box">
+      <van-cell center title="心动匹配">
+        <template #right-icon>
+          <van-switch v-model="isMatchMode" />
+        </template>
+      </van-cell>
+      <UserCardList :userList="userList" :loading="loading"></UserCardList>
+      <van-empty v-if="!userList || userList.length < 1" description="暂无数据" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -79,6 +88,7 @@ watch(isMatchMode,() => {
 </script>
 
 <style scoped>
+
 
 </style>
 

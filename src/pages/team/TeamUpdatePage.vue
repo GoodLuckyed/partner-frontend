@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import {reqAddTeam, reqGetTeamInfoById, reqUpdateTeamInfo} from "../api/team";
+import {reqAddTeam, reqGetTeamInfoById, reqUpdateTeamInfo} from "../../api/team";
 import {showFailToast, showSuccessToast} from "vant";
 import {useRoute, useRouter} from "vue-router";
 

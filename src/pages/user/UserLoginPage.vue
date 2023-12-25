@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import myAxios from "../utils/request";
+import myAxios from "../../utils/request.ts";
 import {showFailToast, showSuccessToast} from "vant";
 import {useRoute, useRouter} from "vue-router";
 

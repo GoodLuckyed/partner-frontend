@@ -1,7 +1,6 @@
 <template>
   <div id="teamPage">
     <van-search v-model="searchText" placeholder="请输入搜索关键词" @search="onSearch"/>
-    <van-button type="primary" @click="doJoinTeam">创建队伍</van-button>
     <TeamCardList :team-list="teamList"></TeamCardList>
     <van-empty v-if="teamList.length < 1" description="无搜索结果" />
   </div>
@@ -9,9 +8,9 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import TeamCardList from "../components/TeamCardList.vue";
+import TeamCardList from "../../components/TeamCardList.vue";
 import {onMounted, ref} from "vue";
-import {reqGetCreatedTeamList} from "../api/team";
+import {reqGetCreatedTeamList} from "../../api/team";
 import {showFailToast} from "vant";
 
 const router = useRouter();

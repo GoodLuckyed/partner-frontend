@@ -1,7 +1,7 @@
 <template>
   <div id="teamCardList">
     <van-card
-        v-for="team in props.teamList"
+        v-for="team in teamList"
         :desc="team.description"
         :title="`${team.name}`"
         :thumb="ikun"
@@ -43,11 +43,11 @@
 </template>
 
 <script setup lang="ts">
-import {defineProps, onMounted, ref, withDefaults} from "vue";
+import {defineProps, onMounted, ref, watchEffect, withDefaults} from "vue";
 import {TeamType} from "../models/team";
 import ikun from "../assets/ikun.gif";
 import {teamStatusEnum} from "../constants/team.ts";
-import {reqDeleteTeam, reqJoinTeam, reqQuitTeam} from "../api/team";
+import {reqDeleteTeam, reqGetTeamList, reqJoinTeam, reqQuitTeam} from "../api/team";
 import {showFailToast, showSuccessToast} from "vant";
 import {getCurrentUser} from "../services/user.ts";
 import {useRouter} from "vue-router";
@@ -62,6 +62,14 @@ const props = withDefaults(defineProps<teamCardListProps>(), {
 //@ts-ignore
   teamList: [] as TeamType[]
 })
+
+//队伍列表
+const teamList = ref([] as TeamType[])
+watchEffect(() => {
+  teamList.value = props.teamList
+})
+//更新active
+const emit =  defineEmits(['updateActive'])
 
 //密码输入框
 const showPasswordDialog = ref(false)
@@ -86,6 +94,11 @@ const doJoinTeam = async () => {
   const res = await reqJoinTeam(joinTeamId.value, password.value);
   if (res?.code === 0) {
     showSuccessToast("加入队伍成功")
+    //更新队伍列表
+    const updatedTeamList =  await reqGetTeamList()
+    teamList.value = updatedTeamList.data
+    //更新active
+    emit('updateActive')
     doJoinTeamCancle()
   } else {
     showFailToast('加入队伍失败' + (res.description ? `，${res.description}` : ''));
@@ -130,6 +143,11 @@ const doQuitTeam = async (id: number) => {
   const res = await reqQuitTeam(id)
   if (res?.code === 0) {
     showSuccessToast("退出队伍成功")
+    //更新队伍列表
+    const updatedTeamList =  await reqGetTeamList()
+    teamList.value = updatedTeamList.data
+    //更新active
+    emit('updateActive')
   } else {
     showFailToast('退出队伍失败' + (res.description ? `，${res.description}` : ''));
   }
@@ -143,6 +161,11 @@ const doDeleteTeam = async (id: number) => {
   const res = await reqDeleteTeam(id)
   if (res?.code === 0) {
     showSuccessToast("解散队伍成功")
+    //更新队伍列表
+    const updatedTeamList =  await reqGetTeamList()
+    teamList.value = updatedTeamList.data
+    //更新active
+    emit('updateActive')
   } else {
     showFailToast('解散队伍失败' + (res.description ? `，${res.description}` : ''));
   }

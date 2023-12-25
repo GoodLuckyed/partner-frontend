@@ -26,12 +26,15 @@
            @click="showPicker = true"
        />
        <van-popup v-model:show="showPicker" position="bottom">
-         <van-date-picker
+         <van-picker-group
+             title="设定过期日期"
+             :tabs="['选择日期', '选择时间']"
              @confirm="onConfirm"
              @cancel="showPicker = false"
-             title="选择日期"
-             :min-date="minDate"
-         />
+         >
+           <van-date-picker v-model="currentDate" :min-date="minDate"/>
+           <van-time-picker v-model="currentTime" :columns-type="columnsType"/>
+         </van-picker-group>
        </van-popup>
        <van-field name="stepper" label="最大人数">
          <template #input>
@@ -69,7 +72,7 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import { reqAddTeam } from "../api/team";
+import { reqAddTeam } from "../../api/team";
 import {showFailToast, showSuccessToast} from "vant";
 import { useRouter } from "vue-router";
 
@@ -90,8 +93,13 @@ const addTeamData = ref({...initFormData})
 //当前时间
 const minDate = new Date();
 const showPicker = ref(false);
-const onConfirm = ({ selectedValues }:any) => {
-  addTeamData.value.expireTime = selectedValues.join('-');
+
+const currentDate = ref(['2023', '10', '01']);		//定义一个初始时间(年月日)
+const currentTime = ref(['00', '00', '00']);      //定义一个初始时间(时分秒)
+const columnsType = ['hour', 'minute', 'second'];
+
+const onConfirm = () => {
+  addTeamData.value.expireTime = currentDate.value.join('-') + 'T' + currentTime.value.join(':');
   showPicker.value = false
 }
 

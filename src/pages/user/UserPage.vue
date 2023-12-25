@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import {getCurrentUser} from "../services/user";
+import {getCurrentUser} from "../../services/user.ts";
 
 const user = ref({})
 

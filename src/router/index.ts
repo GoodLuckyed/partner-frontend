@@ -1,16 +1,16 @@
 import * as VueRouter from 'vue-router'
 import Index from '../pages/IndexPage.vue'
-import TeamPage from '../pages/TeamPage.vue'
-import UserPage from "../pages/UserPage.vue";
-import UserUpdatePage from '../pages/UserUpdatePage.vue'
-import UserTeamJoinPage from '../pages/UserTeamJoinPage.vue'
-import UserTeamCreatePage from '../pages/UserTeamCreatePage.vue'
+import TeamPage from '../pages/team/TeamPage.vue'
+import UserPage from "../pages/user/UserPage.vue";
+import UserUpdatePage from '../pages/user/UserUpdatePage.vue'
+import UserTeamJoinPage from '../pages/user/UserTeamJoinPage.vue'
+import UserTeamCreatePage from '../pages/user/UserTeamCreatePage.vue'
 import SearchPage from '../pages/SearchPage.vue'
-import UserEditPage from '../pages/UserEditPage.vue'
+import UserEditPage from '../pages/user/UserEditPage.vue'
 import SearchResultPage from '../pages/SearchResultPage.vue'
-import UserLoginPage from '../pages/UserLoginPage.vue'
-import TeamAddPage from '../pages/TeamAddPage.vue'
-import TeamUpdatePage from '../pages/TeamUpdatePage.vue'
+import UserLoginPage from '../pages/user/UserLoginPage.vue'
+import TeamAddPage from '../pages/team/TeamAddPage.vue'
+import TeamUpdatePage from '../pages/team/TeamUpdatePage.vue'
 //@ts-ignore
 const router = VueRouter.createRouter({
     //内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
