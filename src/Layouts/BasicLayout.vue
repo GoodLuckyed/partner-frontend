@@ -1,15 +1,15 @@
 <template>
-  <van-nav-bar
-      :title="title"
-      right-text="按钮"
-      left-arrow
-      @click-left="onClickLeft"
-      @click-right="onClickRight"
-  >
-    <template #right>
-      <van-icon name="search" size="18"/>
-    </template>
-  </van-nav-bar>
+<!--  <van-nav-bar-->
+<!--      :title="title"-->
+<!--      right-text="按钮"-->
+<!--      left-arrow-->
+<!--      @click-left="onClickLeft"-->
+<!--      @click-right="onClickRight"-->
+<!--  >-->
+<!--    <template #right>-->
+<!--      <van-icon name="search" size="18"/>-->
+<!--    </template>-->
+<!--  </van-nav-bar>-->
   <div id="content">
     <router-view/>
   </div>
