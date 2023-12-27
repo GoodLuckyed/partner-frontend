@@ -11,6 +11,7 @@ import SearchResultPage from '../pages/SearchResultPage.vue'
 import UserLoginPage from '../pages/user/UserLoginPage.vue'
 import TeamAddPage from '../pages/team/TeamAddPage.vue'
 import TeamUpdatePage from '../pages/team/TeamUpdatePage.vue'
+import NoticeDetailPage from '../pages/notice/NoticeDetailPage.vue'
 //@ts-ignore
 const router = VueRouter.createRouter({
     //内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
@@ -19,87 +20,91 @@ const router = VueRouter.createRouter({
         {
             path: '/',
             component: Index,
-            meta:{
-                title:"首页"
+            meta: {
+                title: "首页"
             }
         },
         {
             path: '/team',
             component: TeamPage,
-            meta:{
-                title:"找队伍"
+            meta: {
+                title: "找队伍"
             }
         },
         {
             path: '/user',
             component: UserPage,
-            meta:{
-                title:"个人信息"
+            meta: {
+                title: "个人信息"
             }
         },
         {
             path: '/user/update',
             component: UserUpdatePage,
-            meta:{
+            meta: {
                 title: '更新个人信息'
             }
         },
         {
             path: '/user/team/join',
             component: UserTeamJoinPage,
-            meta:{
+            meta: {
                 title: '已加入队伍'
             }
         },
         {
             path: '/user/team/create',
             component: UserTeamCreatePage,
-            meta:{
+            meta: {
                 title: '已创建队伍'
             }
         },
         {
             path: '/search',
             component: SearchPage,
-            meta:{
+            meta: {
                 title: '找伙伴'
             }
         },
         {
             path: '/user/edit',
             component: UserEditPage,
-            meta:{
+            meta: {
                 title: '编辑个人信息'
             }
         },
         {
             path: '/user/list',
             component: SearchResultPage,
-            meta:{
+            meta: {
                 title: '用户列表'
             }
         },
         {
-            path:'/user/login',
-            component:UserLoginPage,
-            meta:{
-                title:"登录"
+            path: '/user/login',
+            component: UserLoginPage,
+            meta: {
+                title: "登录"
             }
         },
         {
-            path:"/team/add",
-            component:TeamAddPage,
-            meta:{
+            path: "/team/add",
+            component: TeamAddPage,
+            meta: {
                 title: '创建队伍'
             }
         },
         {
-            path:"/team/update",
-            component:TeamUpdatePage,
-            meta:{
+            path: "/team/update",
+            component: TeamUpdatePage,
+            meta: {
                 title: '更新队伍'
             }
-        }
+        },
+        {
+            path: '/notice/detail',
+            component:NoticeDetailPage
+        },
     ]
 })
 

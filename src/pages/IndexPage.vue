@@ -26,13 +26,39 @@
       </div>
     </div>
     <div class="content-box">
-      <van-cell center title="心动匹配">
-        <template #right-icon>
-          <van-switch v-model="isMatchMode" />
-        </template>
-      </van-cell>
-      <UserCardList :userList="userList" :loading="loading"></UserCardList>
-      <van-empty v-if="!userList || userList.length < 1" description="暂无数据" />
+      <div class="cust-van-tabs" style="padding: 0 10px">
+        <van-tabs v-model:active="activeName" sticky swipeable offset-top="64" animated @change="onChangeTab">
+          <van-tab title="官方公告" name="notice">
+            <div class="notice">
+              <NoticeCardList :noticeList="noticeList"></NoticeCardList>
+            </div>
+          </van-tab>
+          <van-tab title="推荐队友" name="recommend">
+            <div class="cust-recommend">
+              <div class="recommend-switch">
+                <van-cell center>
+                  <template #title>
+                    <svg t="1703559841938" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10215" width="18" height="18"><path d="M882.607224 620.289332c-32.233122-46.50108-75.778894-81.46643-126.399805-101.611236 22.323425-15.70468 41.104163-36.645618 54.679343-61.067844 15.711843-28.26781 24.01802-60.572564 24.01802-93.420693 0-102.397135-79.284741-185.704492-176.739307-185.704492-13.83817 0-25.097608 11.258415-25.097608 25.097608 0 13.855566 11.259438 25.128307 25.097608 25.128307 69.742411 0 126.482693 60.775178 126.482693 135.478578 0 74.719772-56.739259 135.50723-126.482693 135.50723-13.83817 0-25.097608 11.265578-25.097608 25.112957l0 0.1361c0 13.855566 11.259438 25.128307 25.097608 25.128307 125.46348 0 227.536226 108.816335 227.536226 242.568594 0 13.872962 11.285021 25.159006 25.157983 25.159006 13.83817 0 25.097608-11.286044 25.097608-25.159006C935.958316 730.243583 917.509129 670.644183 882.607224 620.289332z" p-id="10216" fill="#1296db"></path><path d="M623.157147 577.673745c-26.348088-18.662035-55.000662-33.399691-85.316108-43.895743 64.020082-38.906102 103.316064-108.150162 103.316064-183.412286 0-118.333082-96.263437-214.604706-214.588333-214.604706-118.358665 0-214.649731 96.271624-214.649731 214.604706 0 40.289612 11.282974 79.585593 32.630165 113.642247 18.054191 28.803 42.605354 52.879348 71.567989 70.318532-30.826076 10.523681-59.94937 25.424042-86.697571 44.369533-29.125341 20.629853-54.761208 45.569872-76.194356 74.126254-44.566008 59.375296-68.122517 130.018216-68.122517 204.28978 0 13.83817 11.258415 25.097608 25.097608 25.097608 13.855566 0 25.128307-11.259438 25.128307-25.097608 0-77.456093 30.202882-150.434198 85.043908-205.489094 54.711066-54.924937 127.125329-85.206614 203.921389-85.283362 2.535753 0.225127 5.117554 0.047072 7.631818-0.515746l1.991354-0.446162c74.719772 1.51347 144.95337 31.659047 198.329021 85.261872 54.815443 55.04978 85.003999 128.013559 85.003999 205.448162 0 13.83817 11.272741 25.097608 25.128307 25.097608 13.83817 0 25.097608-11.259438 25.097608-25.097608 0-74.271564-23.556509-144.913461-68.121494-204.28978C677.918355 623.243617 652.282488 598.303598 623.157147 577.673745zM426.56877 186.002274c90.629113 0 164.362418 73.733305 164.362418 164.363442 0 90.638323-73.733305 164.378791-164.362418 164.378791-90.647533 0-164.393117-73.740468-164.393117-164.378791C262.17463 259.735579 335.921237 186.002274 426.56877 186.002274z" p-id="10217" fill="#1296db"></path></svg>
+                    <span>智能匹配</span>
+                  </template>
+                  <template #right-icon>
+                    <van-switch v-model="isMatchMode" />
+                  </template>
+                </van-cell>
+              </div>
+              <div class="recommend-partner">
+                <UserCardList :userList="userList" :loading="loading"></UserCardList>
+                <van-empty v-if="!userList || userList.length < 1" description="暂无数据" />
+              </div>
+            </div>
+          </van-tab>
+          <van-tab title="热门帖文" name="post">
+            <div class="post-card">
+              <PostCardList></PostCardList>
+            </div>
+          </van-tab>
+        </van-tabs>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +71,10 @@ import 'vant/es/toast/style';
 import 'vant/es/notify/style'
 import UserCardList from "../components/UserCardList.vue";
 import {UserType} from "../models/user";
+import NoticeCardList from "../components/NoticeCardList.vue";
+import PostCardList from "../components/PostCardList.vue";
+import {reqGetNoticeList} from "../api/notice";
+import {NoticeType} from "../models/notice";
 
 
 const loading = ref<boolean>(false)
@@ -54,12 +84,14 @@ const userList = ref([])
 const isMatchMode = ref<boolean>(false)
 const showSearchSelect = ref<boolean>(false) //点击搜索图标时，显示搜索选项
 const handleScroll = ref() //获取滚动元素
-const stickyColor = ref('cust-navbar')
+const stickyColor = ref('cust-navbar') //顶部颜色
 const actions = ref([
   { text: '选项一' },
   { text: '选项二' },
   { text: '选项三' },
 ])
+const activeName = ref('recommend') //当前选中的tab
+const noticeList = ref<NoticeType[]>([]) // 公告列表
 
 //当页面滚动时，判断头部背景颜色是否需要更改
 const onChange = () => {
@@ -72,6 +104,18 @@ const onChange = () => {
     }
   });
 };
+
+//当tab切换时触发,加载数据
+const onChangeTab = async (name:string) => {
+  if (name == 'notice'){
+   const res = await reqGetNoticeList();
+   if (res.code == 0){
+      noticeList.value = res.data;
+   }else {
+     showFailToast('加载公告失败')
+   }
+  }
+}
 
 const loadData = async () => {
   loading.value = true;
@@ -162,6 +206,15 @@ watch(isMatchMode,() => {
   position: relative;
   padding: 48px 10px 16px 10px;
   background-color: #0095db;
+}
+.content-box{
+  background-color: #eef0f3;
+}
+.recommend-switch{
+  padding: 10px 0;
+}
+.notice{
+  margin-top: 10px;
 }
 </style>
 
