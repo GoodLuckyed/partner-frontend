@@ -5,7 +5,7 @@
         <div :class="stickyColor">
           <div class="title">伙伴匹配系统</div>
           <div class="search">
-            <van-popover placement="bottom-end" v-model:show="showSearchSelect" theme="dark" :actions="actions">
+            <van-popover placement="bottom-end" v-model:show="showSearchSelect" :actions="actions">
               <template #reference>
                 <svg t="1703486602000" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4262" width="32" height="32"><path d="M937.798221 769.855766 714.895525 546.869159c23.821545-45.681412 37.589107-97.495498 37.589107-152.564721 0-182.559872-148.560524-331.078441-331.079464-331.078441-182.623317 0-331.098907 148.517545-331.098907 331.078441 0 182.559872 148.47559 331.078441 331.098907 331.078441 60.575634 0 117.27089-16.647145 166.206416-45.221948L807.552831 900.100132c17.938558 17.939581 41.551348 26.867928 65.12423 26.867928s47.182602-8.928347 65.123206-26.867928c17.396205-17.396205 27.033703-40.550555 27.033703-65.164139C964.831924 810.321386 955.194426 787.16806 937.798221 769.855766M133.027248 394.304438c0-158.989037 129.34795-288.358477 288.378943-288.358477 158.948105 0 288.3595 129.36944 288.3595 288.358477 0 99.206466-50.437739 186.899714-126.950344 238.795665-1.044796 0.416486-1.876744 1.252527-2.877537 1.835811-45.515636 30.03813-99.999528 47.727001-158.530596 47.727001C262.375198 682.662915 133.027248 553.336454 133.027248 394.304438M907.594315 869.896226c-19.273972 19.191084-50.562583 19.191084-69.836555 0L623.6995 655.797034c26.157753-20.274766 49.186236-44.305065 68.292386-71.421656l215.601406 215.683271c9.344832 9.262968 14.518668 21.694091 14.518668 34.877345S916.939147 860.551394 907.594315 869.896226" fill="#000000" p-id="4263"></path><path d="M215.169059 387.79007c0 0 42.156122-211.011878 234.186693-224.946238C449.355753 162.843832 185.944458 131.555222 215.169059 387.79007" fill="#000000" p-id="4264"></path>
                 </svg>
@@ -61,10 +61,15 @@
       </div>
     </div>
   </div>
+  <van-button v-if="activeName == 'notice' && currentUser.userRole == 1"
+              @click="toNoticeAdd"
+              icon="plus"
+              type="primary"
+              style="position: fixed;bottom: 100px;left: 300px;border-radius: 50%;width: 50px;height: 50px;z-index: 10"/>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref, watch} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import myAxios from "../utils/request.ts";
 import {showFailToast } from 'vant';
 import 'vant/es/toast/style';
@@ -75,7 +80,10 @@ import NoticeCardList from "../components/NoticeCardList.vue";
 import PostCardList from "../components/PostCardList.vue";
 import {reqGetNoticeList} from "../api/notice";
 import {NoticeType} from "../models/notice";
+import {getCurrentUser} from "../services/user.ts";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 
 const loading = ref<boolean>(false)
 
@@ -86,13 +94,28 @@ const showSearchSelect = ref<boolean>(false) //点击搜索图标时，显示搜
 const handleScroll = ref() //获取滚动元素
 const stickyColor = ref('cust-navbar') //顶部颜色
 const actions = ref([
-  { text: '选项一' },
+  { text: '搜索用户',icon:'friends-o' },
   { text: '选项二' },
   { text: '选项三' },
 ])
 const activeName = ref('recommend') //当前选中的tab
 const noticeList = ref<NoticeType[]>([]) // 公告列表
 
+//获取当前用户
+const currentUser = ref()
+onMounted(async () => {
+  currentUser.value = await getCurrentUser();
+  // 确保页面加载完成后再调用 onChange
+  await nextTick();
+  onChange();
+})
+
+//跳转到公告添加页面（仅管理员可操作）
+const toNoticeAdd = () => {
+  router.push({
+    path: '/notice/add'
+  })
+}
 //当页面滚动时，判断头部背景颜色是否需要更改
 const onChange = () => {
   requestAnimationFrame(() => {

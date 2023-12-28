@@ -1,6 +1,6 @@
 <template>
-  <div class="notice-card-List" v-for="notice in props.noticeList">
-    <div class="notice-card" @click="toNoticeDetail(notice)">
+  <div class="notice-card-List">
+    <div class="notice-card" v-for="notice in props.noticeList" @click="toNoticeDetail(notice)">
       <div class="title">{{ notice.title }} </div>
       <div class="content">{{ notice.content }}</div>
       <div class="notice-bottom">
@@ -10,8 +10,8 @@
             </svg> 通知
           </div>
           <div class="admin" v-else>
-            <van-button plain type="primary" size="mini">修改</van-button>
-            <van-button plain type="danger" size="mini">删除</van-button>
+            <van-button plain type="primary" size="mini" @click.stop="updateNotice(notice)">修改</van-button>
+            <van-button plain type="danger" size="mini" @click.stop="deleteNotice(notice)">删除</van-button>
           </div>
         </div>
         <div class="right">
@@ -27,6 +27,8 @@ import {NoticeType} from "../models/notice";
 import {getCurrentUser} from "../services/user.ts";
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
+import {showFailToast, showSuccessToast} from "vant";
+import {reqDeleteNotice} from "../api/notice";
 
 const router = useRouter();
 interface NoticeListProps {
@@ -50,6 +52,27 @@ const toNoticeDetail = (notice:NoticeType) => {
       noticeId: notice.id
     }
   })
+}
+
+//修改公告
+const updateNotice = (notice:NoticeType) => {
+  router.push({
+    path: '/notice/update',
+    query:{
+      noticeId: notice.id
+    }
+  })
+}
+//删除公告
+const deleteNotice = async (notice:NoticeType) => {
+  const res = await reqDeleteNotice(notice.id);
+  if (res.code == 0){
+    showSuccessToast('删除成功')
+    //刷新页面
+    router.go(0)
+  }else {
+    showFailToast('删除失败')
+  }
 }
 </script>
 

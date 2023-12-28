@@ -12,6 +12,8 @@ import UserLoginPage from '../pages/user/UserLoginPage.vue'
 import TeamAddPage from '../pages/team/TeamAddPage.vue'
 import TeamUpdatePage from '../pages/team/TeamUpdatePage.vue'
 import NoticeDetailPage from '../pages/notice/NoticeDetailPage.vue'
+import NoticeEditPage from '../pages/notice/NoticeEditPage.vue'
+import NoticeAddPage from '../pages/notice/NoticeAddPage.vue'
 //@ts-ignore
 const router = VueRouter.createRouter({
     //内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
@@ -103,7 +105,24 @@ const router = VueRouter.createRouter({
         },
         {
             path: '/notice/detail',
-            component:NoticeDetailPage
+            component:NoticeDetailPage,
+            meta:{
+                title:'公告详情'
+            }
+        },
+        {
+            path: '/notice/update',
+            component:NoticeEditPage,
+            meta:{
+                title:'更新公告'
+            }
+        },
+        {
+            path: '/notice/add',
+            component:NoticeAddPage,
+            meta:{
+                title:'添加公告'
+            }
         },
     ]
 })
