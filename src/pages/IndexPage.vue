@@ -53,8 +53,8 @@
             </div>
           </van-tab>
           <van-tab title="热门帖文" name="post">
-            <div class="post-card">
-              <PostCardList></PostCardList>
+            <div class="post">
+              <PostCardList :postList="postList"></PostCardList>
             </div>
           </van-tab>
         </van-tabs>
@@ -82,6 +82,9 @@ import {reqGetNoticeList} from "../api/notice";
 import {NoticeType} from "../models/notice";
 import {getCurrentUser} from "../services/user.ts";
 import { useRouter } from "vue-router";
+import {PostType} from "../models/post";
+import {reqPostList} from "../api/post";
+
 
 const router = useRouter();
 
@@ -100,10 +103,11 @@ const actions = ref([
 ])
 const activeName = ref('recommend') //当前选中的tab
 const noticeList = ref<NoticeType[]>([]) // 公告列表
-
+const postList = ref<PostType[]>([]) //帖文列表
 //获取当前用户
 const currentUser = ref()
 onMounted(async () => {
+  loadData();
   currentUser.value = await getCurrentUser();
   // 确保页面加载完成后再调用 onChange
   await nextTick();
@@ -137,6 +141,19 @@ const onChangeTab = async (name:string) => {
    }else {
      showFailToast('加载公告失败')
    }
+  }
+  if (name == 'recommend'){
+    loadData();
+  }
+  const currentPage = 1;
+  const pageSize = 10;
+  if (name == 'post'){
+    const res = await reqPostList(currentPage,pageSize);
+    if (res.code == 0){
+      postList.value = res.data;
+    }else {
+      showFailToast('加载帖文失败')
+    }
   }
 }
 
@@ -185,10 +202,6 @@ const loadData = async () => {
   loading.value = false;
 }
 
-onMounted(() => {
-  loadData();
-})
-
 watch(isMatchMode,() => {
   loadData();
 })
@@ -220,8 +233,7 @@ watch(isMatchMode,() => {
   padding: 65px 18px;
 }
 .my-swipe{
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
+  border-radius: 20px;
 }
 .cust-navbar {
 }
@@ -237,6 +249,9 @@ watch(isMatchMode,() => {
   padding: 10px 0;
 }
 .notice{
+  margin-top: 10px;
+}
+.post{
   margin-top: 10px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="notice-card-List">
-    <div class="notice-card" v-for="notice in props.noticeList" @click="toNoticeDetail(notice)">
+    <div class="notice-card" v-for="notice in props.noticeList" :key="notice.id" @click="toNoticeDetail(notice)">
       <div class="title">{{ notice.title }} </div>
       <div class="content">{{ notice.content }}</div>
       <div class="notice-bottom">
@@ -82,6 +82,7 @@ const deleteNotice = async (notice:NoticeType) => {
   padding-bottom: 30px;
   margin-bottom: 10px;
   background-color: white;
+  border-radius: 10px;
 }
 .title{
   padding: 15px 0 8px 15px

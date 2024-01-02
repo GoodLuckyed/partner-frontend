@@ -57,7 +57,7 @@
         </div>
         <div class="text-team">去组队</div>
       </div>
-      <div class="publish-article" @click.stop style="margin-left: 50px">
+      <div class="publish-article" @click.stop style="margin-left: 50px" @click="addPost">
         <div class="back" style="background-color: burlywood;">
           <div class="icon-box">
             <svg t="1703437594028" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="27825" width="48" height="48"><path d="M288 416h192c17.67 0 32-14.33 32-32s-14.33-32-32-32H288c-17.67 0-32 14.33-32 32s14.33 32 32 32zM288 576h352c17.69 0 32-14.31 32-32s-14.31-32-32-32H288c-17.67 0-32 14.31-32 32s14.33 32 32 32zM480 672H288c-17.67 0-32 14.31-32 32s14.33 32 32 32h192c17.67 0 32-14.31 32-32s-14.33-32-32-32zM939.98 645.16L826.84 532.02c-6.25-6.25-14.44-9.37-22.63-9.37s-16.38 3.12-22.63 9.37L553.37 760.24c-6 6-9.37 14.14-9.37 22.63V896c0 17.67 14.33 32 32 32h113.14c8.49 0 16.63-3.37 22.63-9.37l228.21-228.21c12.49-12.5 12.49-32.76 0-45.26zM675.88 864H608v-67.88L804.21 599.9l67.88 67.88L675.88 864z" fill="#ffffff" p-id="27826"></path><path d="M448 864H192V160h383.86l0.11 128.09c0.06 35.23 28.78 63.91 64 63.91H768v80c0 17.67 14.33 32 32 32s32-14.33 32-32V274.87c0-8.58-3.45-16.8-9.56-22.82L673.09 105.18A32.002 32.002 0 0 0 650.66 96H160c-17.67 0-32 14.33-32 32v768c0 17.67 14.33 32 32 32h288c17.67 0 32-14.33 32-32s-14.33-32-32-32z m319.72-576H639.97l-0.1-125.73L767.72 288z" fill="#ffffff" p-id="27827"></path></svg>
@@ -101,7 +101,11 @@ const createTeam = () => {
   router.push('/team/add')
   showOverPlay.value = false
 }
-
+//跳转到发帖页面
+const addPost = () => {
+  router.push('/post/add')
+  showOverPlay.value = false
+}
 /**
  * @description: 路由前置守卫 (根据路由切换标题)
  */
