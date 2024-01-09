@@ -15,6 +15,7 @@ import NoticeDetailPage from '../pages/notice/NoticeDetailPage.vue'
 import NoticeEditPage from '../pages/notice/NoticeEditPage.vue'
 import NoticeAddPage from '../pages/notice/NoticeAddPage.vue'
 import PostAddPage from '../pages/post/PostAddPage.vue'
+import PostDetailPage from "../pages/post/PostDetailPage.vue";
 //@ts-ignore
 const router = VueRouter.createRouter({
     //内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
@@ -130,6 +131,13 @@ const router = VueRouter.createRouter({
             component:PostAddPage,
             meta:{
                 title:'发布帖文'
+            }
+        },
+        {
+            path: '/post/detail',
+            component:PostDetailPage,
+            meta:{
+                title:'帖文详情'
             }
         },
     ]

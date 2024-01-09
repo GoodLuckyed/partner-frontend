@@ -1,6 +1,6 @@
 <template>
   <div class="post-card-List">
-    <div class="post-card" v-for="post in props.postList" :key="post.id">
+    <div class="post-card" v-for="post in props.postList" :key="post.id" @click="toPostDetail(post)">
       <div class="time">{{ post?.createTime.toString().split('T')[0] }}</div>
       <div class="title">{{ post?.title }}</div>
       <div class="bottom">
@@ -20,15 +20,24 @@
       </div>
     </div>
   </div>
-
 </template>
 
 
 
 <script setup lang="ts">
 import {PostType} from "../models/post";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 
+const toPostDetail = (post:PostType) => {
+  router.push({
+    path: '/post/detail',
+    query:{
+      postId:post.id
+    }
+  })
+}
 
 interface PostCardListProps {
   postList: PostType[]

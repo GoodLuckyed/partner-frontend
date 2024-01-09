@@ -146,11 +146,10 @@ const onChangeTab = async (name:string) => {
     loadData();
   }
   const currentPage = 1;
-  const pageSize = 10;
   if (name == 'post'){
-    const res = await reqPostList(currentPage,pageSize);
+    const res = await reqPostList(currentPage);
     if (res.code == 0){
-      postList.value = res.data;
+      postList.value = res.data.records;
     }else {
       showFailToast('加载帖文失败')
     }

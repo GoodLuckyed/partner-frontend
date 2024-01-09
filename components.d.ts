@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CommentList: typeof import('./src/components/CommentList.vue')['default']
     NoticeCardList: typeof import('./src/components/NoticeCardList.vue')['default']
     PostCardList: typeof import('./src/components/PostCardList.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -25,6 +26,8 @@ declare module 'vue' {
     VanField: typeof import('vant/es')['Field']
     VanFieldpx: typeof import('vant/es')['Fieldpx']
     VanForm: typeof import('vant/es')['Form']
+    VanGrid: typeof import('vant/es')['Grid']
+    VanGridItem: typeof import('vant/es')['GridItem']
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanNavBar: typeof import('vant/es')['NavBar']
