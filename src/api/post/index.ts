@@ -11,6 +11,8 @@ enum API {
     LIKE_POST = "/post/like",
     //根据id删除帖文
     DELETE_POST_BY_ID = "/post/del/",
+    //更新帖文
+    UPDATE_POST = "/post/update"
 }
 
 // 添加帖文
@@ -45,4 +47,13 @@ export const reqLikePost = (id:number) => {
 //根据id删除帖文
 export const reqDeletePostById = (id:number) => {
     return myAxios.delete(API.DELETE_POST_BY_ID + `/${id}`);
+}
+
+//更新帖文
+export const reqUpdatePost = (data:any) => {
+    return myAxios.put(API.UPDATE_POST,data,{
+        headers:{
+            "Content-Type": "multipart/form-data"
+        }
+    });
 }

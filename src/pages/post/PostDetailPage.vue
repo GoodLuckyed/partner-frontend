@@ -111,6 +111,33 @@
         </van-grid-item>
       </van-grid>
     </van-popup>
+
+    <van-popup
+        v-else
+        v-model:show="showBottom"
+        round
+        position="bottom"
+        :style="{ height: '88px' }"
+    >
+      <van-grid :border="false">
+        <van-grid-item @click="copyUrl">
+          <template #icon>
+            <svg t="1704729452772" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4209" width="24" height="24"><path d="M752.535797 273.701662l-2.230808-2.227738c-51.299363-51.300386-135.227868-51.300386-186.526207 0l-118.846782 118.883621c-51.299363 51.281967-51.299363 135.222751 0 186.544627l2.192945 2.156106c4.27742 4.267187 8.833179 8.116865 13.485129 11.728112l43.49563-43.544749c-5.086855-2.956332-9.885138-6.591115-14.223956-10.92891l-2.192945-2.156106c-27.855418-27.866674-27.855418-73.180719 0-101.048417L606.609263 314.26859c27.782763-27.855418 73.084529-27.855418 100.951203 0l2.218528 2.180666c27.855418 27.867698 27.855418 73.194022 0 101.012601l-53.736878 53.765531c9.304923 23.067368 13.740956 47.64002 13.304004 72.114434l83.152838-83.117023C803.83516 408.918273 803.83516 325.004095 752.535797 273.701662L752.535797 273.701662 752.535797 273.701662 752.535797 273.701662zM576.877101 444.959118c-4.266164-4.264117-8.820899-8.118911-13.521968-11.680017l-43.472094 43.496653c5.088902 3.00545 9.888208 6.615675 14.249539 10.952446l2.215458 2.227738c27.855418 27.820626 27.855418 73.135694 0 101.002368L417.465438 709.790762c-27.854395 27.821649-73.15616 27.821649-101.010555 0l-2.229784-2.204202c-27.854395-27.864628-27.854395-73.204256 0-100.999298l53.771671-53.745065c-9.317203-23.070438-13.763468-47.665603-13.340843-72.140017l-83.176374 83.068927c-51.312666 51.349505-51.312666 135.288243 0 186.563046l2.216481 2.228761c51.299363 51.251268 135.227868 51.251268 186.526207 0l118.835526-118.883621c51.250244-51.299363 51.250244-135.263683 0-186.513928L576.877101 444.959118 576.877101 444.959118 576.877101 444.959118 576.877101 444.959118zM576.877101 444.959118" fill="#8a8a8a" p-id="4210"></path></svg>
+          </template>
+          <template #text>
+            <span class="grid-font">复制链接</span>
+          </template>
+        </van-grid-item>
+        <van-grid-item @click="report">
+          <template #icon>
+            <svg t="1704729591022" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7622" width="24" height="24"><path d="M960.288 787.488c-98.88-154.08-287.36-469.568-385.76-622.912-21.44-27.968-71.872-44-102.88 0L61.504 803.872c-23.36 33.888-23.008 79.872 49.376 82.432h824.64c48.416-2.784 48.416-62.496 24.768-98.816z m-437.44-27.776a47.296 47.296 0 1 1 0-94.592 47.296 47.296 0 0 1 0 94.592z m35.456-165.536c0.448 11.52-10.944 23.68-23.648 23.68h-23.648c-12.672 0-23.2-12.16-23.616-23.68l-23.68-224.64c0-19.552 15.904-35.456 35.488-35.456h47.296c19.584 0 35.456 15.904 35.456 35.488l-23.648 224.64z" fill="#8a8a8a" p-id="7623"></path></svg>
+          </template>
+          <template #text>
+            <span class="grid-font">举报</span>
+          </template>
+        </van-grid-item>
+      </van-grid>
+    </van-popup>
   </div>
 </template>
 
@@ -125,6 +152,8 @@ import {reqGetUserById} from "../../api/user";
 import CommentList from "../../components/CommentList.vue";
 import {reqAddComment, reqComment, reqCommentList} from "../../api/comment";
 import {CommentType} from "../../models/comment";
+import {UserType} from "../../models/user";
+import {reqFollowUser} from "../../api/follow";
 
 const router = useRouter();
 const route = useRoute();
@@ -231,7 +260,15 @@ const copyUrl = () => {
 
 //编辑帖文
 const updatePost = () => {
-
+  router.push({
+    path:'/post/edit',
+    query:{
+      postId:post.value?.id,
+      image:post.value?.image,
+      title:post.value?.title,
+      content:post.value?.content
+    }
+  })
 }
 
 //删除帖文
@@ -269,8 +306,14 @@ const onClickLeft = () => {
 }
 
 //关注 取关
-const followUser = (author) => {
-
+const followUser = async (author:UserType) => {
+  const res = await reqFollowUser(author.id);
+  if (res.code == 0) {
+    const res1 = await reqGetUserById(author.id);
+    if (res1.code == 0){
+      author.isFollow = res1.data.isFollow;
+    }
+  }
 }
 
 </script>
