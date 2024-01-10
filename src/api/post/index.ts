@@ -12,7 +12,9 @@ enum API {
     //根据id删除帖文
     DELETE_POST_BY_ID = "/post/del/",
     //更新帖文
-    UPDATE_POST = "/post/update"
+    UPDATE_POST = "/post/update",
+    //根据帖文标题查询帖文
+    GET_POST_BY_TITLE = "/post/get/title",
 }
 
 // 添加帖文
@@ -56,4 +58,13 @@ export const reqUpdatePost = (data:any) => {
             "Content-Type": "multipart/form-data"
         }
     });
+}
+
+//根据帖文标题查询帖文
+export const reqPostByTitle = (title:string) => {
+    return myAxios.get(API.GET_POST_BY_TITLE,{
+        params:{
+            title:title
+        }
+    })
 }
