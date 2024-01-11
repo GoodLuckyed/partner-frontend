@@ -60,7 +60,7 @@ const onClickLeft = () => {
 };
 //发布帖文
 const onClickRight = async () => {
-  if (title.value === '' || content.value === '') {
+  if (title.value === '' || content.value === '' || image.value[0] == undefined) {
     showFailToast('请将内容填写完整');
     return;
   }

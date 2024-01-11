@@ -47,14 +47,32 @@
                 </van-cell>
               </div>
               <div class="recommend-partner">
-                <UserCardList :userList="userList" :loading="loading"></UserCardList>
+                <van-list
+                    v-model:loading="userLoading"
+                    :finished="userFinished"
+                    finished-text="没有更多了"
+                    @load="onLoad"
+                    :immediate-check="false"
+                >
+                  <UserCardList :userList="userList" :loading="loading"></UserCardList>
+                </van-list>
+                <van-back-top right="20px" bottom="60px"/>
                 <van-empty v-if="!userList || userList.length < 1" description="暂无数据" />
               </div>
             </div>
           </van-tab>
           <van-tab title="热门帖文" name="post">
             <div class="post">
+              <van-list
+                  v-model:loading="postLoading"
+                  :finished="postFinished"
+                  finished-text="没有更多了"
+                  @load="postOnLoad"
+                  :immediate-check="false"
+              >
               <PostCardList :postList="postList"></PostCardList>
+              </van-list>
+              <van-back-top right="20px" bottom="60px"/>
             </div>
           </van-tab>
         </van-tabs>
@@ -89,7 +107,12 @@ import {reqPostList} from "../api/post";
 const router = useRouter();
 
 const loading = ref<boolean>(false)
-
+const userLoading = ref<boolean>(false)
+const userFinished = ref<boolean>(false)
+const currentPage = ref(1)
+const postCurrentPage = ref(1)
+const postFinished = ref<boolean>(false)
+const postLoading = ref<boolean>(false)
 const userList = ref([])
 
 const isMatchMode = ref<boolean>(false)
@@ -112,6 +135,25 @@ onMounted(async () => {
   await nextTick();
   onChange();
 })
+
+//下拉加载更多
+const onLoad =async () => {
+  currentPage.value++;
+  await loadData();
+  userLoading.value = false;
+};
+
+const postOnLoad = async () => {
+  postCurrentPage.value++
+  const res = await reqPostList(postCurrentPage.value);
+  if (res.code == 0){
+    postList.value = [...postList.value,...res.data.records];
+  }
+    postLoading.value = false;
+  if (!res.data.records || res.data.records.length < 10){
+    postFinished.value = true;
+  }
+}
 
 //跳转到公告添加页面（仅管理员可操作）
 const toNoticeAdd = () => {
@@ -144,9 +186,10 @@ const onChangeTab = async (name:string) => {
   if (name == 'recommend'){
     loadData();
   }
-  const currentPage = 1;
   if (name == 'post'){
-    const res = await reqPostList(currentPage);
+    postCurrentPage.value = 1;
+    postList.value = []
+    const res = await reqPostList(postCurrentPage.value);
     if (res.code == 0){
       postList.value = res.data.records;
     }else {
@@ -160,6 +203,8 @@ const loadData = async () => {
   let userListData;
   //心动模式，根据标签匹配用户
   if (isMatchMode.value){
+    userList.value = [];
+    currentPage.value = 1;
     const num = 10;
     userListData = await myAxios.get("/user/match",{
       params:{
@@ -168,17 +213,19 @@ const loadData = async () => {
     })
         .then(function (response) {
           // showSuccessToast('请求成功');
+          userFinished.value = true;
           return response.data;
         })
         .catch(function (error) {
           showFailToast('请求失败')
         })
   }else {
+    userFinished.value = false;
     //普通模式，直接分页查询用户
     userListData = await myAxios.get('/user/recommend',{
       params:{
-        currentPage:1,
-        pageSize:4
+        currentPage:currentPage.value,
+        pageSize:10
       }
     })
         .then(function (response) {
@@ -195,8 +242,13 @@ const loadData = async () => {
         user.tags = JSON.parse(user.tags)
       }
     })
-    userList.value = userListData;
+    userList.value = [...userList.value, ...userListData]; // 将新数据添加到现有数据
   }
+  // 检查是否所有的数据都已经获取
+  if (!userListData || userListData.length < 10) { // 假设每页的大小是10
+    userFinished.value = true;
+  }
+
   loading.value = false;
 }
 
