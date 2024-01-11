@@ -29,9 +29,10 @@
         </template>
       </van-tab>
     </van-tabs>
+    <div style="padding-top: 4px"></div>
     <van-button class="create-button" icon="plus" type="primary" @click="doCreateTeam" />
     <TeamCardList :team-list="teamList" @update-active="updateActive"></TeamCardList>
-    <van-empty v-if="teamList.length < 1" description="无搜索结果" />
+    <van-empty v-if="teamList.length < 1" description="暂无数据" />
   </div>
 </template>
 
@@ -39,7 +40,7 @@
 import { useRouter } from "vue-router";
 import TeamCardList from "../../components/TeamCardList.vue";
 import {onMounted, ref} from "vue";
-import {reqGetTeamList} from "../../api/team";
+import {reqGetJoinedTeamList, reqGetTeamList} from "../../api/team";
 import {showFailToast} from "vant";
 
 const router = useRouter();
@@ -51,11 +52,20 @@ const active = ref('public')
 const updateActive = () => {
   active.value = 'public'
 }
-const onTabChange = (name:string) => {
+const onTabChange = async (name:string) => {
   if (name === 'public'){
-    listTeams(searchText.value,0);
-  }else {
-    listTeams(searchText.value,2)
+    await listTeams(searchText.value,0);
+  }
+  if (name === 'secret'){
+    await listTeams(searchText.value,2)
+  }
+  if (name === 'mine'){
+    const res = await reqGetJoinedTeamList(searchText.value);
+    if (res?.code == 0) {
+      teamList.value = res.data
+    }else {
+      showFailToast('加载队伍列表失败,请稍后重试')
+    }
   }
 }
 
