@@ -196,6 +196,17 @@ const doDeleteTeam = async (id: number) => {
   }
 }
 
+/**
+ * 查看队伍
+ */
+const showTeam = (id:number) => {
+  router.push({
+    path: '/team/show',
+    query: {
+      teamId: id
+    }
+  })
+}
 </script>
 
 <style scoped>

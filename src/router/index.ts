@@ -11,6 +11,7 @@ import SearchResultPage from '../pages/SearchResultPage.vue'
 import UserLoginPage from '../pages/user/UserLoginPage.vue'
 import TeamAddPage from '../pages/team/TeamAddPage.vue'
 import TeamUpdatePage from '../pages/team/TeamUpdatePage.vue'
+import TeamShowPage from "../pages/team/TeamShowPage.vue";
 import NoticeDetailPage from '../pages/notice/NoticeDetailPage.vue'
 import NoticeEditPage from '../pages/notice/NoticeEditPage.vue'
 import NoticeAddPage from '../pages/notice/NoticeAddPage.vue'
@@ -105,6 +106,13 @@ const router = VueRouter.createRouter({
             component: TeamUpdatePage,
             meta: {
                 title: '更新队伍'
+            }
+        },
+        {
+            path: "/team/show",
+            component: TeamShowPage,
+            meta: {
+                title: '查看队伍'
             }
         },
         {
