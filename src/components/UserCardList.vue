@@ -3,6 +3,7 @@
   <van-card
       :desc="`简介：${user.profile}`"
       :title="`${user.username}`"
+      @click="toUserDetail(user)"
   >
     <template #thumb>
       <van-image
@@ -18,7 +19,7 @@
       </van-tag>
     </template>
     <template #footer>
-      <van-button size="mini" style="position:relative; bottom: 25px;border: none;color: #007acc" @click="toChat(user)">打招呼</van-button>
+      <van-button size="mini" style="position:relative; bottom: 25px;border: none;color: #007acc" @click.stop="toChat(user)">打招呼</van-button>
     </template>
   </van-card>
   </van-skeleton>
@@ -61,6 +62,16 @@ const toChat = (user:UserType) => {
       id:user.id,
       username:user.username,
       userType:1
+    }
+  })
+}
+
+//跳转到用户详情页面
+const toUserDetail = (user:UserType) => {
+  router.push({
+    path:'/user/detail',
+    query:{
+      id:user.id
     }
   })
 }

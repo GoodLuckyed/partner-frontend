@@ -20,6 +20,7 @@ import PostDetailPage from "../pages/post/PostDetailPage.vue";
 import PostEditPage from "../pages/post/PostEditPage.vue";
 import SearchPostResultPage from '../pages/SearchPostResultPage.vue';
 import ChatPage from "../components/Chat.vue";
+import UserDetailPage from "../pages/user/UserDetailPage.vue";
 //@ts-ignore
 const router = VueRouter.createRouter({
     //内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
@@ -51,6 +52,13 @@ const router = VueRouter.createRouter({
             component: UserPage,
             meta: {
                 title: "个人信息"
+            }
+        },
+        {
+            path: '/user/detail',
+            component: UserDetailPage,
+            meta: {
+                title: "用户详情页"
             }
         },
         {

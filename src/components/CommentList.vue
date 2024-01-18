@@ -8,6 +8,7 @@
             height="2.5rem"
             :src="comment.commentUser?.avatarUrl"
             style="margin-right: 10px;"
+            @click="toUserDetail(comment.commentUser?.id)"
         />
       </template>
       <template #value>
@@ -32,8 +33,9 @@ import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
 import {reqComment, reqDeleteComment, reqLikeComment} from "../api/comment";
 import {showConfirmDialog} from "vant";
+import {useRouter} from "vue-router";
 
-
+const router = useRouter();
 //获取当前用户
 const currentUser = ref()
 onMounted(async () => {
@@ -70,6 +72,15 @@ const deleteComment = (comment:CommentType) => {
       .catch(() => {
         // on cancel
       });
+}
+//跳转到评论用户详情页面
+const toUserDetail = (id:number) => {
+  router.push({
+    path:'/user/detail',
+    query:{
+      id:id
+    }
+  })
 }
 interface CommentListProps {
   commentList: CommentType[]

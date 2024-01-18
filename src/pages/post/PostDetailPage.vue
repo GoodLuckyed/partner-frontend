@@ -17,7 +17,7 @@
     <van-cell-group inset>
       <van-cell style="display: flex;align-items: center">
         <template #icon>
-          <van-image round width="2.5rem" height="2.5rem" :src="author?.avatarUrl"/>
+          <van-image round width="2.5rem" height="2.5rem" :src="author?.avatarUrl" @click="toUserDetail(author?.id)"/>
         </template>
         <template #title>
           <span style="padding-left: 5px">{{ author?.username }}</span>
@@ -315,7 +315,15 @@ const followUser = async (author:UserType) => {
     }
   }
 }
-
+//跳转到用户详情页面
+const toUserDetail = (id:number) => {
+  router.push({
+    path:'/user/detail',
+    query:{
+      id:id
+    }
+  })
+}
 </script>
 
 

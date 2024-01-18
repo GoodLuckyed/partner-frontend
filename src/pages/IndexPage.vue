@@ -245,7 +245,7 @@ const loadData = async () => {
     userList.value = [...userList.value, ...userListData]; // 将新数据添加到现有数据
   }
   // 检查是否所有的数据都已经获取
-  if (!userListData || userListData.length < 10) { // 假设每页的大小是10
+  if (!userListData || userListData.length < 9) { // 假设每页的大小是10
     userFinished.value = true;
   }
 
