@@ -18,7 +18,7 @@
       </van-tag>
     </template>
     <template #footer>
-      <van-button size="mini" style="position:relative; bottom: 25px;border: none;color: #007acc">打招呼</van-button>
+      <van-button size="mini" style="position:relative; bottom: 25px;border: none;color: #007acc" @click="toChat(user)">打招呼</van-button>
     </template>
   </van-card>
   </van-skeleton>
@@ -27,7 +27,10 @@
 <script setup lang="ts">
 import {defineProps, ref, withDefaults} from "vue";
 import {UserType} from "../models/user";
+import {useRoute, useRouter} from "vue-router";
 
+const router = useRouter()
+const route = useRoute()
 
 const tagColor = ref([
     //定义七种颜色
@@ -50,6 +53,17 @@ const props = withDefaults(defineProps<UserCardListProps>(),{
   loading:false
 })
 
+//跳转到聊天页面
+const toChat = (user:UserType) => {
+  router.push({
+    path:'/public_chat',
+    query:{
+      id:user.id,
+      username:user.username,
+      userType:1
+    }
+  })
+}
 
 </script>
 

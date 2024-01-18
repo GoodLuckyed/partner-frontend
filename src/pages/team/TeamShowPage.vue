@@ -36,7 +36,7 @@
       <span class="custom-title">队伍描述</span>
     </template>
   </van-cell>
-  <van-cell is-link center icon="chat-o">
+  <van-cell is-link center icon="chat-o" @click="toChat">
     <template #title>
       <span class="custom-title">队伍聊天室</span>
     </template>
@@ -87,6 +87,21 @@ const onClickLeft = () => {
   router.back()
 }
 
+//跳转到队伍聊天页面
+const toChat = () => {
+  if (!team.value.hasJoin){
+    showFailToast('请先加入队伍')
+    return;
+  }
+  router.push({
+    path:'/public_chat',
+    query:{
+      teamId:team.value.id,
+      teamName:team.value.name,
+      teamType:2
+    }
+  })
+}
 </script>
 
 
