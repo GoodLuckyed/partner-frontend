@@ -155,13 +155,15 @@ onMounted( async () => {
   lastElement.scrollIntoView()
 })
 
+let  token = sessionStorage.getItem('token')
+
 //初始化websocket连接
 const init = () => {
   let uid = stats.value.user?.id;
   if (typeof (WebSocket) == 'undefined'){
     showFailToast('您的浏览器不支持WebSocket')
   }else {
-    let socketUrl = 'ws://localhost:8080/api/websocket' + '/' + uid + '/' + stats.value.team.teamId
+    let socketUrl = 'ws://localhost:8080/api/websocket' + '/' + uid + '/' + stats.value.team.teamId + '/' + token
     if (socket != null){
       socket.close()
       socket = null
@@ -209,7 +211,7 @@ const init = () => {
         if (flag){
           stats.value.message.push(data)
           //构建聊天内容
-          createContent(data.fromUser,null,data.text,data.isAdmin,data.createTime)
+          createContent(data.formUser,null,data.text,data.isAdmin,data.createTime)
           nextTick(() => {
             const lastElement = chatRoom.value.lastElementChild
             lastElement.scrollIntoView()

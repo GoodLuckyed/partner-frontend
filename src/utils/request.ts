@@ -6,10 +6,15 @@ const myAxios = axios.create({
     withCredentials:true
 });
 
+let token = sessionStorage.getItem('token')
+
 // 添加请求拦截器
 myAxios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     console.log('我要发请求了',config)
+    if (token){
+        config.headers['Authorization'] = token
+    }
     return config;
 }, function (error) {
     // 对请求错误做些什么

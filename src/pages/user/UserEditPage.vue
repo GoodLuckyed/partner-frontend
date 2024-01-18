@@ -21,8 +21,7 @@ import myAxios from "../../utils/request.ts";
 import { showSuccessToast, showFailToast } from 'vant';
 import 'vant/es/toast/style';
 import 'vant/es/notify/style'
-import {getCurrentUser, setCurrentUser} from "../../services/user.ts";
-import {setCurrentUserState} from "../../states/user.ts";
+import {getCurrentUser} from "../../services/user.ts";
 
 const router = useRouter();
 const route = useRoute();
@@ -42,7 +41,7 @@ const onSubmit = async () => {
   if (result.code === 0){
     //更新缓存
     const result = await myAxios.get('/user/current')
-    setCurrentUser(result.data);
+    // setCurrentUser(result.data);
     router.back();
     showSuccessToast('修改成功')
   }else {

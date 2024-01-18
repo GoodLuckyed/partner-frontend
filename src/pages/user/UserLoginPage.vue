@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import myAxios from "../../utils/request.ts";
 import {showFailToast, showSuccessToast} from "vant";
 import {useRoute, useRouter} from "vue-router";
@@ -42,6 +42,8 @@ const onSubmit = async () => {
   })
   if (result.code === 0 && result.data){
     window.location.href = route.query?.redirect as string ?? '/';
+    const token = result.data;
+    sessionStorage.setItem("token",token);
     showSuccessToast('登录成功')
   }else {
     showFailToast('登录失败')
