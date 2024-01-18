@@ -19,6 +19,7 @@ import PostAddPage from '../pages/post/PostAddPage.vue'
 import PostDetailPage from "../pages/post/PostDetailPage.vue";
 import PostEditPage from "../pages/post/PostEditPage.vue";
 import SearchPostResultPage from '../pages/SearchPostResultPage.vue';
+import ChatPage from "../components/Chat.vue";
 //@ts-ignore
 const router = VueRouter.createRouter({
     //内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
@@ -36,6 +37,13 @@ const router = VueRouter.createRouter({
             component: TeamPage,
             meta: {
                 title: "找队伍"
+            }
+        },
+        {
+            path: '/public_chat',
+            component: ChatPage,
+            meta: {
+                title: "聊天室"
             }
         },
         {

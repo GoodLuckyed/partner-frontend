@@ -4,9 +4,9 @@ let currentUser:UserType
 
 
 export const setCurrentUserState = (user) => {
-    localStorage.setItem('user',JSON.stringify(user));
+    sessionStorage.setItem('user',JSON.stringify(user));
 }
 
 export const getCurrentUserState = () => {
-    return JSON.parse(localStorage.getItem('user'))
+    return JSON.parse(sessionStorage.getItem('user'))
 }

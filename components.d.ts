@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Chat: typeof import('./src/components/Chat.vue')['default']
     CommentList: typeof import('./src/components/CommentList.vue')['default']
     NoticeCardList: typeof import('./src/components/NoticeCardList.vue')['default']
     PostCardList: typeof import('./src/components/PostCardList.vue')['default']
@@ -33,6 +34,7 @@ declare module 'vue' {
     VanImage: typeof import('vant/es')['Image']
     VanList: typeof import('vant/es')['List']
     VanNavBar: typeof import('vant/es')['NavBar']
+    VanNoticeBar: typeof import('vant/es')['NoticeBar']
     VanOverlay: typeof import('vant/es')['Overlay']
     VanPickerGroup: typeof import('vant/es')['PickerGroup']
     VanPopover: typeof import('vant/es')['Popover']
