@@ -1,4 +1,12 @@
 <template>
+  <van-sticky>
+    <van-nav-bar
+        title="创建队伍"
+        left-text="返回"
+        left-arrow
+        @click-left="onClickLeft"
+    />
+  </van-sticky>
  <div id="teamAddPage">
    <van-form @submit="onSubmit">
      <van-cell-group inset>
@@ -11,11 +19,13 @@
        />
        <van-field
            v-model="addTeamData.description"
-           rows="4"
+           rows="2"
            autosize
+           maxlength="50"
            label="队伍描述"
            type="textarea"
            placeholder="请输入队伍描述"
+           show-word-limit
        />
        <van-field
            is-link
@@ -29,6 +39,7 @@
          <van-picker-group
              title="设定过期日期"
              :tabs="['选择日期', '选择时间']"
+             next-step-text="下一步"
              @confirm="onConfirm"
              @cancel="showPicker = false"
          >
@@ -62,7 +73,7 @@
      </van-cell-group>
      <div style="margin: 16px;">
        <van-button round block type="primary" native-type="submit">
-         提交
+        创建队伍
        </van-button>
      </div>
    </van-form>
@@ -93,9 +104,10 @@ const addTeamData = ref({...initFormData})
 //当前时间
 const minDate = new Date();
 const showPicker = ref(false);
-
-const currentDate = ref(['2023', '10', '01']);		//定义一个初始时间(年月日)
-const currentTime = ref(['00', '00', '00']);      //定义一个初始时间(时分秒)
+const date = new Date()
+//默认队伍过期时间为一天
+const currentDate = ref<string[]>([date.getFullYear().toString(), date.getMonth().toString(), (date.getDate() + 1).toString()]);
+const currentTime = ref<string[]>([date.getHours().toString(), date.getMinutes().toString()]);
 const columnsType = ['hour', 'minute', 'second'];
 
 const onConfirm = () => {
@@ -120,6 +132,10 @@ const onSubmit = async () => {
   }else {
     showFailToast('创建队伍失败')
   }
+}
+
+const onClickLeft = () => {
+  router.back();
 }
 </script>
 

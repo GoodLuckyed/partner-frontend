@@ -70,8 +70,8 @@ const onTabChange = async (name:string) => {
 }
 
 const searchText = ref('')
-const onSearch = (val:string) => {
-  listTeams(val)
+const onSearch = () => {
+  onTabChange(active.value)
 }
 const doCreateTeam = () => {
   router.push({
