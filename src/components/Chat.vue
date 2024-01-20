@@ -264,6 +264,23 @@ const createContent = (remoteUser,nowUser,text,isAdmin,createTime) => {
   stats.value.content += html
 }
 
+/**
+ * 模板字符串事件
+ * @param id
+ */
+window.showUser = (id) => {
+  showUser(id)
+}
+
+const showUser = (id) => {
+  router.push({
+    path:'/user/detail',
+    query:{
+      id:id
+    }
+  })
+}
+
 //发送消息
 const send =() => {
   if(stats.value.chatUser.id === 0){

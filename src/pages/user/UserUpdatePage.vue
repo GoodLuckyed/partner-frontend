@@ -23,6 +23,7 @@
   </van-cell>
   <van-cell title="电话" is-link :value="user.phone" @click="toEdit('phone','电话',user.phone)"/>
   <van-cell title="邮箱" is-link :value="user.email" @click="toEdit('email','邮箱',user.email)"/>
+  <van-cell title="标签" is-link to="/user/update/tags"/>
   <van-cell title="密码" is-link @click="updatePassword(user.id)"></van-cell>
   <van-cell title="创建时间"   :value="user.createTime?.toString().split('.000')[0]"/>
 
