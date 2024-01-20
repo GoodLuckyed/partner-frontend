@@ -1,4 +1,12 @@
 <template>
+  <van-sticky>
+    <van-nav-bar
+        title="用户修改"
+        left-text="返回"
+        left-arrow
+        @click-left="onClickLeft"
+    />
+  </van-sticky>
   <van-form @submit="onSubmit">
       <van-field
           v-model="editUser.currentValue"
@@ -48,7 +56,9 @@ const onSubmit = async () => {
     showFailToast('修改失败')
   }
 };
-
+const onClickLeft = () => {
+  router.back()
+}
 </script>
 
 <style scoped>
