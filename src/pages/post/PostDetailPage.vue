@@ -39,7 +39,7 @@
     <van-divider/>
 
     <van-cell-group inset>
-      <van-cell :title="`评论 ${post?.comments}`"/>
+      <van-cell :title="`评论 ${post?.comments ?? '0'}`"/>
     </van-cell-group>
 
     <div class="line"/>

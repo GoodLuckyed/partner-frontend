@@ -119,6 +119,7 @@ const doJoinTeam = async () => {
   const res = await reqJoinTeam(joinTeamId.value, password.value);
   if (res?.code === 0) {
     showSuccessToast("加入队伍成功")
+    router.go(0)
     //更新队伍列表
     const updatedTeamList =  await reqGetTeamList()
     teamList.value = updatedTeamList.data
@@ -168,6 +169,7 @@ const doQuitTeam = async (id: number) => {
   const res = await reqQuitTeam(id)
   if (res?.code === 0) {
     showSuccessToast("退出队伍成功")
+    router.go(0)
     //更新队伍列表
     const updatedTeamList =  await reqGetTeamList()
     teamList.value = updatedTeamList.data
@@ -186,6 +188,7 @@ const doDeleteTeam = async (id: number) => {
   const res = await reqDeleteTeam(id)
   if (res?.code === 0) {
     showSuccessToast("解散队伍成功")
+    router.go(0)
     //更新队伍列表
     const updatedTeamList =  await reqGetTeamList()
     teamList.value = updatedTeamList.data

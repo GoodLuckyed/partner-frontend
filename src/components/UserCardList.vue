@@ -1,7 +1,7 @@
 <template>
   <van-skeleton title avatar :row="3" :loading="props.loading" v-for="user in props.userList">
   <van-card
-      :desc="`简介：${user.profile}`"
+      :desc="`简介：${user.profile ?? '暂无简介'}`"
       :title="`${user.username}`"
       @click="toUserDetail(user)"
   >

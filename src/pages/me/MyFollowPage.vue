@@ -8,6 +8,7 @@
     />
   </van-sticky>
   <UserCardList :userList="followList"></UserCardList>
+  <van-empty v-if="followList.length < 1" description="暂无数据" />
 </template>
 
 <script setup lang="ts">

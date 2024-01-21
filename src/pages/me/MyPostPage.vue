@@ -8,6 +8,7 @@
     />
   </van-sticky>
   <PostCardList :postList="postList"></PostCardList>
+  <van-empty v-if="postList.length < 1" description="暂无数据" />
 </template>
 
 <script setup lang="ts">

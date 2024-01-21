@@ -70,9 +70,10 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../../services/user.ts";
-import {showFailToast} from "vant";
+import {showFailToast, showSuccessToast} from "vant";
 import {useRouter} from "vue-router";
 import {UserType} from "../../models/user";
+import myAxios from "../../utils/request.ts";
 
 const router = useRouter();
 const user = ref<UserType>({} as UserType)
@@ -105,6 +106,15 @@ const toAddress = () => {
   window.open('https://github.com/GoodLuckyed/partner-frontend','_blank')
 }
 
+//退出登录
+const logout = async () => {
+  const res = await myAxios.post('/user/logout')
+  if (res.code == 0){
+    showSuccessToast('退出成功')
+    sessionStorage.removeItem('token')
+    await router.push('/user/login')
+  }
+}
 </script>
 
 <style scoped>

@@ -8,6 +8,7 @@
     />
   </van-sticky>
   <UserCardList :userList="fansList"></UserCardList>
+  <van-empty v-if="fansList.length < 1" description="暂无数据" />
 </template>
 
 <script setup lang="ts">

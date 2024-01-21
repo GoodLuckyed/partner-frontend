@@ -24,6 +24,7 @@ import MyFansPage from "../pages/me/MyFansPage.vue";
 import MyPostPage from "../pages/me/MyPostPage.vue";
 import UserUpdatePassword from "../pages/user/UserUpdatePassword.vue";
 import UserTagsPage from "../pages/user/UserTagsPage.vue";
+import UserRegisterPage from "../pages/user/UserRegisterPage.vue";
 //@ts-ignore
 const router = VueRouter.createRouter({
     //内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
@@ -111,6 +112,13 @@ const router = VueRouter.createRouter({
             component: UserLoginPage,
             meta: {
                 title: "登录"
+            }
+        },
+        {
+            path: '/user/register',
+            component: UserRegisterPage,
+            meta: {
+                title: "注册"
             }
         },
         {

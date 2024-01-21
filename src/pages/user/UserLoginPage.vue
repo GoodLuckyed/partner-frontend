@@ -1,4 +1,20 @@
 <template>
+  <van-sticky>
+    <van-nav-bar
+        title="用户登录"
+        left-text="返回"
+        left-arrow
+        @click-left="onClickLeft"
+    />
+  </van-sticky>
+  <van-row justify="center">
+    <van-image
+        width="343"
+        height="278"
+        src="../../../public/huoban.png"
+        style="background-position:center"
+    />
+  </van-row>
   <van-form @submit="onSubmit">
     <van-cell-group inset>
       <van-field
@@ -19,9 +35,10 @@
     </van-cell-group>
     <div style="margin: 16px;">
       <van-button round block type="primary" native-type="submit">
-        提交
+        登录
       </van-button>
     </div>
+    <van-cell title="" to="/user/register" value="还没有账号？点击注册"></van-cell>
   </van-form>
 </template>
 
@@ -49,6 +66,10 @@ const onSubmit = async () => {
     showFailToast('登录失败')
   }
 };
+
+const onClickLeft = () => {
+  router.back();
+}
 </script>
 
 <style scoped>

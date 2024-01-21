@@ -22,6 +22,12 @@
           <van-swipe-item >
             <img src="../assets/2.jpg" alt="" style="height: 144px; width: 339px;">
           </van-swipe-item>
+          <van-swipe-item >
+            <img src="../assets/3.jpg" alt="" style="height: 144px; width: 339px;">
+          </van-swipe-item>
+          <van-swipe-item >
+            <img src="../assets/4.jpg" alt="" style="height: 144px; width: 339px;">
+          </van-swipe-item>
         </van-swipe>
       </div>
     </div>
