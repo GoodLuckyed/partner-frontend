@@ -135,11 +135,11 @@ const postList = ref<PostType[]>([]) //帖文列表
 //获取当前用户
 const currentUser = ref()
 onMounted(async () => {
-  loadData();
+  await nextTick(() => {
+    onChange();
+  });
+  await loadData();
   currentUser.value = await getCurrentUser();
-  // 确保页面加载完成后再调用 onChange
-  await nextTick();
-  onChange();
 })
 
 //下拉加载更多

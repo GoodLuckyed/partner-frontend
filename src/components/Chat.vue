@@ -163,7 +163,8 @@ const init = () => {
   if (typeof (WebSocket) == 'undefined'){
     showFailToast('您的浏览器不支持WebSocket')
   }else {
-    let socketUrl = 'ws://localhost:8080/api/websocket' + '/' + uid + '/' + stats.value.team.teamId + '/' + token
+    // let socketUrl = 'ws://localhost:8080/api/websocket' + '/' + uid + '/' + stats.value.team.teamId + '/' + token
+    let socketUrl = 'ws://81.70.77.119:8080/api/websocket' + '/' + uid + '/' + stats.value.team.teamId + '/' + token
     if (socket != null){
       socket.close()
       socket = null

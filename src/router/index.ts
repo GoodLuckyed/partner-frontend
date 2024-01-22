@@ -33,6 +33,7 @@ const router = VueRouter.createRouter({
         {
             path: '/',
             component: Index,
+            name: 'index',
             meta: {
                 title: "首页"
             }
@@ -40,6 +41,7 @@ const router = VueRouter.createRouter({
         {
             path: '/team',
             component: TeamPage,
+            name: 'team',
             meta: {
                 title: "找队伍"
             }
@@ -47,6 +49,7 @@ const router = VueRouter.createRouter({
         {
             path: '/public_chat',
             component: ChatPage,
+            name: 'public_chat',
             meta: {
                 title: "聊天室"
             }
@@ -54,6 +57,7 @@ const router = VueRouter.createRouter({
         {
             path: '/user',
             component: UserPage,
+            name: 'user',
             meta: {
                 title: "个人信息"
             }
