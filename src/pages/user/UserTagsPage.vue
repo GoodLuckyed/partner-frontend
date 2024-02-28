@@ -1,24 +1,16 @@
 <template>
   <van-sticky>
     <van-nav-bar
-        title="搜索用户"
+        title="修改标签"
         left-text="返回"
         left-arrow
         @click-left="onClickLeft"
     />
   </van-sticky>
-  <form action="/">
-    <van-search
-        v-model="searchText"
-        placeholder="请输入用户昵称"
-        @search="onSearch"
-    />
-  </form>
   <van-divider v-if="activeIds.length != 0" content-position="left">已选标签</van-divider>
-<!--  <van-empty v-if="activeIds.length == 0" description="未选择标签" :image-size="[35,20]" style="height: 50px"/>-->
   <van-row gutter="16">
     <van-col v-for="tag in activeIds">
-      <van-tag  :show="true" closeable size="small" type="primary" @close="doclose(tag)">
+      <van-tag :show="true" closeable size="small" type="primary" @close="doclose(tag)">
         {{ tag }}
       </van-tag>
     </van-col>
@@ -38,19 +30,22 @@
     </van-field>
   </van-cell-group>
   <div style="padding: 12px">
-    <van-button block type="primary" @click="doSearchResult">标签搜索</van-button>
+    <van-button block type="primary" @click="updateTag">点击修改</van-button>
   </div>
 </template>
 
-<script setup>
-import {ref} from "vue";
-import { useRouter } from "vue-router";
-import {showFailToast} from "vant";
 
-const router = useRouter();
+<script setup lang="ts">
+import {useRouter} from "vue-router";
+import {showFailToast, showSuccessToast} from "vant";
+import {onMounted, ref} from "vue";
+import {getCurrentUser} from "../../services/user.ts";
+import myAxios from "../../utils/request.ts";
+
+
+const router = useRouter()
 const activeIds = ref([]);
 const activeIndex = ref(0);
-const searchText = ref('');
 
 const originTagList = [
   {
@@ -164,43 +159,23 @@ const originTagList = [
 //标签列表
 let tagList = ref(originTagList)
 
-const onSearch = () => {
-  router.push({
-    path: '/user/list',
-    query:{
-      searchText:searchText.value
+const currentUser = ref()
+onMounted(async () => {
+  currentUser.value = await getCurrentUser();
+  if (currentUser.value){
+    if(currentUser.value.tags == null){
+      return;
     }
-  })
+    currentUser.value.tags = JSON.parse(currentUser.value.tags)
+    activeIds.value = currentUser.value.tags
+  }
+})
 
-  //标签搜索
-  // tagList.value = originTagList.map(parentTag =>  {
-  //   const tempParentTag = {...parentTag}
-  //   const tempChildren = [...parentTag.children]
-  //   tempParentTag.children =  tempChildren.filter(item => item.text.includes(searchText.value));
-  //   return tempParentTag;
-  // })
-};
-
-
-// const onCancel = () => {
-//   searchText.value = '';
-//   tagList.value = originTagList
-// };
 
 //移除标签
 const doclose = (tag) => {
   activeIds.value = activeIds.value.filter(item => {
     return item !== tag
-  })
-}
-
-//执行搜索
-const doSearchResult = () => {
-  router.push({
-    path: '/user/list',
-    query:{
-      tags:activeIds.value
-    }
   })
 }
 
@@ -215,10 +190,25 @@ const addUserDefinedTag = () => {
   }
 }
 
+//修改标签
+const updateTag = async () => {
+  const res = await myAxios.post("/user/update/tags", {
+    id: currentUser.value.id,
+    tagList: activeIds.value
+  })
+  if (res.code == 0){
+    showSuccessToast("修改成功")
+    router.back();
+  }else {
+    showFailToast("修改失败" + (res.description ? `，${res.description}` : ''))
+  }
+}
+
 const onClickLeft = () => {
   router.back();
 }
 </script>
+
 <style scoped>
 
 </style>

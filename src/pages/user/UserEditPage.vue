@@ -1,4 +1,12 @@
 <template>
+  <van-sticky>
+    <van-nav-bar
+        title="用户修改"
+        left-text="返回"
+        left-arrow
+        @click-left="onClickLeft"
+    />
+  </van-sticky>
   <van-form @submit="onSubmit">
       <van-field
           v-model="editUser.currentValue"
@@ -17,12 +25,11 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {useRoute,useRouter} from "vue-router";
-import myAxios from "../utils/request";
+import myAxios from "../../utils/request.ts";
 import { showSuccessToast, showFailToast } from 'vant';
 import 'vant/es/toast/style';
 import 'vant/es/notify/style'
-import {getCurrentUser, setCurrentUser} from "../services/user";
-import {setCurrentUserState} from "../states/user";
+import {getCurrentUser} from "../../services/user.ts";
 
 const router = useRouter();
 const route = useRoute();
@@ -42,14 +49,16 @@ const onSubmit = async () => {
   if (result.code === 0){
     //更新缓存
     const result = await myAxios.get('/user/current')
-    setCurrentUser(result.data);
+    // setCurrentUser(result.data);
     router.back();
     showSuccessToast('修改成功')
   }else {
     showFailToast('修改失败')
   }
 };
-
+const onClickLeft = () => {
+  router.back()
+}
 </script>
 
 <style scoped>

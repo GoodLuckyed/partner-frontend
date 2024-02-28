@@ -13,4 +13,5 @@ export type TeamType = {
     hasJoinNum?: number;
     userId:number;
     hasJoin:boolean;
+    memberList:UserType[];
 }
