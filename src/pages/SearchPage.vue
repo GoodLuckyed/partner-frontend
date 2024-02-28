@@ -58,7 +58,6 @@ const originTagList = [
     children: [
       {text: '男', id: '男'},
       {text: '女', id: '女'},
-      {text: '保密', id: '保密'}
     ],
   },
   {

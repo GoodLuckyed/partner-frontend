@@ -1,5 +1,4 @@
 import * as VueRouter from 'vue-router'
-import Index from '../pages/IndexPage.vue'
 import TeamPage from '../pages/team/TeamPage.vue'
 import UserPage from "../pages/user/UserPage.vue";
 import UserUpdatePage from '../pages/user/UserUpdatePage.vue'
@@ -25,6 +24,7 @@ import MyPostPage from "../pages/me/MyPostPage.vue";
 import UserUpdatePassword from "../pages/user/UserUpdatePassword.vue";
 import UserTagsPage from "../pages/user/UserTagsPage.vue";
 import UserRegisterPage from "../pages/user/UserRegisterPage.vue";
+import IndexPage from "../pages/IndexPage.vue";
 //@ts-ignore
 const router = VueRouter.createRouter({
     //内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
@@ -32,7 +32,7 @@ const router = VueRouter.createRouter({
     routes: [
         {
             path: '/',
-            component: Index,
+            component: IndexPage,
             name: 'index',
             meta: {
                 title: "首页"

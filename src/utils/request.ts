@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const isDev = process.env.NODE_ENV === 'development' ? 'http://localhost:8080/api' : 'https://81.70.77.119:8080/api'
+const isDev = process.env.NODE_ENV === 'development' ? 'http://localhost:8080/api' : 'http://81.70.77.119:8080/api'
 
 //@ts-ignore
 const myAxios = axios.create({

@@ -27,7 +27,7 @@
       <van-cell title="性别">
         <span v-if="user?.gender===1">男</span>
         <span v-else-if="user?.gender===0">女</span>
-        <span v-else-if="user?.gender===2">保密</span>
+        <span v-else-if="user?.gender===2"></span>
         <span v-else>该用户暂未填写性别</span>
       </van-cell>
       <!--        <van-cell title="电话" :value="user?.phone"/>-->

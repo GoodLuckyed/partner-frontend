@@ -53,7 +53,6 @@ const originTagList = [
     children: [
       {text: '男', id: '男'},
       {text: '女', id: '女'},
-      {text: '保密', id: '保密'}
     ],
   },
   {
@@ -164,6 +163,9 @@ const currentUser = ref()
 onMounted(async () => {
   currentUser.value = await getCurrentUser();
   if (currentUser.value){
+    if(currentUser.value.tags == null){
+      return;
+    }
     currentUser.value.tags = JSON.parse(currentUser.value.tags)
     activeIds.value = currentUser.value.tags
   }

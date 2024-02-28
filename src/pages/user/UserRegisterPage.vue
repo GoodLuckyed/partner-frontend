@@ -11,7 +11,7 @@
     <van-image
         width="343"
         height="278"
-        src="../../../public/huoban.png"
+        src="/huoban.png"
         style="background-position:center"
     />
   </van-row>
